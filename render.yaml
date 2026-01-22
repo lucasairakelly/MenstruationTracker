@@ -1,0 +1,24 @@
+databases:
+  - name: menstruation-tracker-db
+    databaseName: menstruation_tracker
+    user: tracker_user
+    plan: free
+
+services:
+  - type: web
+    name: menstruation-tracker
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn backend.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: menstruation-tracker-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.13.7"
