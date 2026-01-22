@@ -1,0 +1,298 @@
+<!-- Organism: Cycle Dashboard - combines stat cards, buttons, and cycle list -->
+
+<div class="space-y-8">
+    <!-- Quick Actions Header -->
+    <div class="bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl shadow-lg p-8 text-white">
+        <div class="flex justify-between items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-2">{{ dashboard_title|default:"Your Cycle Dashboard" }}</h2>
+                <p class="text-pink-100">{{ dashboard_subtitle|default:"Track and manage your menstrual health" }}</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="{% url 'cycle_create' %}"
+                    class="px-6 py-3 bg-white text-pink-500 hover:bg-pink-50 rounded-lg font-medium transition-colors shadow-md flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    New Cycle
+                </a>
+                <a href="{% url 'logout' %}"
+                    class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors shadow-md flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid - Direct Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <!-- Total Cycles -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-100 to-purple-100">
+                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-sm">Total Cycles</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ total_cycles|default:'0' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Length -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-100 to-purple-100">
+                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-sm">Average Length</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ avg_cycle|default:'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Day -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-100 to-purple-100">
+                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-sm">Current Day</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ current_day|default:'-' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Days Tracked -->
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-100 to-purple-100">
+                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-sm">Days Tracked</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ days_tracked|default:'0' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Period Prediction - ML Powered -->
+        <div class="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-xl shadow-md text-white">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-white/20">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                        </path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-indigo-100 text-sm">Next Period</p>
+                    {% if forecast.has_enough_data %}
+                    <p class="text-2xl font-bold">
+                        {% if forecast.days_until != None %}
+                        {% if forecast.days_until > 0 %}
+                        {{ forecast.days_until }} days
+                        {% elif forecast.days_until == 0 %}
+                        Today!
+                        {% else %}
+                        Overdue
+                        {% endif %}
+                        {% else %}
+                        --
+                        {% endif %}
+                    </p>
+                    <p class="text-xs text-indigo-200 mt-1">
+                        {% if forecast.predicted_date %}{{ forecast.predicted_date|date:"M d" }}{% endif %}
+                        <span class="opacity-75">• {{ forecast.confidence|floatformat:0 }}% confident</span>
+                    </p>
+                    {% else %}
+                    <p class="text-lg font-semibold">Log cycles</p>
+                    <p class="text-xs text-indigo-200">to get predictions</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent Cycles Panel -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>
+                    Recent Cycles
+                </h3>
+                <span class="px-3 py-1 rounded-full text-sm font-medium bg-pink-100 text-pink-700">
+                    {% if total_cycles == 1 %}
+                    1 cycle
+                    {% else %}
+                    {{ total_cycles }} cycles
+                    {% endif %}
+                </span>
+            </div>
+
+            {% if cycles %}
+            <div class="space-y-3 max-h-96 overflow-y-auto">
+                {% for cycle in cycles %}
+                <a href="{% url 'cycle_detail' cycle.pk %}"
+                    class="block border-l-4 border-pink-400 bg-pink-50 hover:bg-pink-100 p-4 rounded-r-lg transition-all">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <p class="font-semibold text-gray-800 mb-1">{{ cycle.start_date|date:"M d, Y" }}</p>
+                            <div class="flex gap-2 items-center">
+                                {% if cycle.end_date %}
+                                <span class="text-xs text-gray-600">→ {{ cycle.end_date|date:"M d, Y" }}</span>
+                                {% if cycle.cycle_length %}
+                                <span
+                                    class="px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">{{ cycle.cycle_length }} days</span>
+                                {% endif %}
+                                {% else %}
+                                <span
+                                    class="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">Ongoing</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-8 text-gray-400">
+                <svg class="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+                    </path>
+                </svg>
+                <p>No cycles yet</p>
+                <p class="text-sm">Start tracking today!</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Quick Insights Panel -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                    </path>
+                </svg>
+                Quick Insights
+            </h3>
+
+            <div class="space-y-4">
+                <!-- Insight Cards -->
+                <div class="bg-gradient-to-r from-pink-50 to-pink-100 p-4 rounded-lg border-l-4 border-pink-500">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-pink-200">
+                            <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Tracking Status</p>
+                            <p class="text-sm text-gray-600">
+                                {% if cycles %}
+                                You're actively tracking your cycles. Great job!
+                                {% else %}
+                                Start your first cycle to see personalized insights.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg border-l-4 border-purple-500">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-purple-200">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Data Collection</p>
+                            <p class="text-sm text-gray-600">Track at least 3 cycles for accurate predictions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg border-l-4 border-blue-500">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-blue-200">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Health Tip</p>
+                            <p class="text-sm text-gray-600">Stay hydrated and maintain regular exercise for better
+                                cycle health.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="pt-4 space-y-2">
+                    <a href="{% url 'cycle_create' %}"
+                        class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-medium transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Log New Cycle
+                    </a>
+                    <a href="{% url 'analytics' %}"
+                        class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg font-medium transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
+                        View Analytics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

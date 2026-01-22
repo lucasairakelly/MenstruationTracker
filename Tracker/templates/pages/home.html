@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Menstruation Tracker{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-pink-600 mb-4 flex items-center justify-center gap-3">
+                <svg class="w-12 h-12 text-pink-500" viewBox="0 0 24 24" fill="currentColor">
+                    <!-- Flower petals -->
+                    <circle cx="12" cy="5" r="2.5" opacity="0.8" />
+                    <circle cx="17" cy="7" r="2.5" opacity="0.8" />
+                    <circle cx="19" cy="12" r="2.5" opacity="0.8" />
+                    <circle cx="17" cy="17" r="2.5" opacity="0.8" />
+                    <circle cx="12" cy="19" r="2.5" opacity="0.8" />
+                    <circle cx="7" cy="17" r="2.5" opacity="0.8" />
+                    <circle cx="5" cy="12" r="2.5" opacity="0.8" />
+                    <circle cx="7" cy="7" r="2.5" opacity="0.8" />
+                    <!-- Center -->
+                    <circle cx="12" cy="12" r="3" fill="#FFD700" />
+                </svg>
+                Menstruation Tracker
+            </h1>
+            <p class="text-gray-600 text-lg">Your personal cycle companion</p>
+        </div>
+
+        <!-- Messages -->
+        {% if messages %}
+        <div class="mb-8">
+            {% for message in messages %}
+            <div
+                class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% include 'organisms/cycle_dashboard.html' %}
+
+    </div>
+</div>
+{% endblock %}

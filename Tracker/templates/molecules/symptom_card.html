@@ -1,0 +1,16 @@
+<!-- Molecule: Symptom Card - combines icon, text, and checkbox -->
+
+<div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:border-pink-300 transition-all {{ extra_class }}">
+    <label class="flex items-center justify-between cursor-pointer">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">{{ icon }}</span>
+            <span class="text-gray-700 font-medium">{{ name }}</span>
+        </div>
+        <input 
+            type="checkbox" 
+            name="symptom_{{ id }}" 
+            class="w-5 h-5 text-pink-500 border-gray-300 rounded focus:ring-pink-500 cursor-pointer"
+            {% if checked %}checked{% endif %}
+        />
+    </label>
+</div>
