@@ -1,9 +1,3 @@
-databases:
-  - name: menstruation-tracker-db
-    databaseName: menstruation_tracker
-    user: tracker_user
-    plan: free
-
 services:
   - type: web
     name: menstruation-tracker
@@ -13,9 +7,7 @@ services:
     startCommand: gunicorn backend.wsgi:application
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: menstruation-tracker-db
-          property: connectionString
+        sync: false
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
