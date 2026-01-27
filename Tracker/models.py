@@ -17,10 +17,11 @@ class Cycle(models.Model):
     def __str__(self):
         return f"Cycle starting {self.start_date} - {self.user.username}"
 
-    def calculate_cycle_length(self):
-        if self.end_date:
+    def save(self, *args, **kwargs):
+        # Calculate cycle length if start and end dates are present
+        if self.start_date and self.end_date:
             self.cycle_length = (self.end_date - self.start_date).days
-            self.save()
+        super().save(*args, **kwargs)
 
 class DailyLog(models.Model):
     FLOW_CHOICES = [

@@ -108,6 +108,14 @@ def cycle_create(request):
         form = CycleForm(request.POST)
         if form.is_valid():
             cycle = form.save(commit=False)
+            # Automatically close the previous cycle if it's still open
+            previous_cycle = Cycle.objects.filter(user=request.user).order_by('-start_date').first()
+            if previous_cycle and not previous_cycle.end_date:
+                from datetime import timedelta
+                # Set end date to the day before the new cycle starts
+                previous_cycle.end_date = cycle.start_date - timedelta(days=1)
+                previous_cycle.save()  # This will now auto-calculate length
+            
             cycle.user = request.user  # Assign current user
             cycle.save()
             messages.success(request, 'Cycle created successfully!')
@@ -175,6 +183,13 @@ def analytics_view(request):
     """
     Analytics page showing cycle history, charts, and predictions.
     """
+    # Get all user cycles
+    # Self-healing: Fix existing cycles with end dates but no length
+    # This addresses the user's current issue where they have data but it's not processing
+    broken_cycles = Cycle.objects.filter(user=request.user, cycle_length__isnull=True, end_date__isnull=False)
+    for broken_cycle in broken_cycles:
+        broken_cycle.save()  # Triggers the new calculate logic in model.save()
+
     # Get all user cycles
     cycles = Cycle.objects.filter(user=request.user).order_by('-start_date')
     
