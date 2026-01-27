@@ -4,13 +4,9 @@ from .models import Cycle, DailyLog
 class CycleForm(forms.ModelForm):
     class Meta:
         model = Cycle
-        fields = ['start_date', 'end_date', 'notes']
+        fields = ['start_date', 'notes']
         widgets = {
             'start_date': forms.DateInput(attrs={
-                'type': 'date',
-                'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500'
-            }),
-            'end_date': forms.DateInput(attrs={
                 'type': 'date',
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500'
             }),

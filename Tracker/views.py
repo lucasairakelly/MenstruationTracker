@@ -68,6 +68,14 @@ def home(request):
     # Filter cycles by logged-in user only
     cycles = Cycle.objects.filter(user=request.user)[:5]
     total_cycles = Cycle.objects.filter(user=request.user).count()
+
+    # FIX: Check if the latest cycle was prematurely closed (likely user error thinking "End Date" = "End of Period")
+    # If the latest cycle is very short (< 7 days) and has an end date, we re-open it.
+    latest_cycle = Cycle.objects.filter(user=request.user).order_by('-start_date').first()
+    if latest_cycle and latest_cycle.end_date and latest_cycle.cycle_length and latest_cycle.cycle_length < 7:
+        latest_cycle.end_date = None
+        latest_cycle.cycle_length = None
+        latest_cycle.save()
     
     # Calculate actual stats
     all_cycles = Cycle.objects.filter(user=request.user, cycle_length__isnull=False)

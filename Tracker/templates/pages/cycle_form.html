@@ -15,7 +15,7 @@
         <div class="bg-white rounded-2xl shadow-lg p-8">
             <form method="POST">
                 {% csrf_token %}
-                
+
                 <div class="space-y-6">
                     <!-- Start Date -->
                     <div>
@@ -24,20 +24,12 @@
                         </label>
                         {{ form.start_date }}
                         {% if form.start_date.errors %}
-                            <p class="text-red-500 text-sm mt-1">{{ form.start_date.errors.0 }}</p>
+                        <p class="text-red-500 text-sm mt-1">{{ form.start_date.errors.0 }}</p>
                         {% endif %}
                     </div>
 
                     <!-- End Date -->
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">
-                            End Date <span class="text-gray-400 text-sm">(Optional)</span>
-                        </label>
-                        {{ form.end_date }}
-                        {% if form.end_date.errors %}
-                            <p class="text-red-500 text-sm mt-1">{{ form.end_date.errors.0 }}</p>
-                        {% endif %}
-                    </div>
+
 
                     <!-- Notes -->
                     <div>
@@ -46,17 +38,19 @@
                         </label>
                         {{ form.notes }}
                         {% if form.notes.errors %}
-                            <p class="text-red-500 text-sm mt-1">{{ form.notes.errors.0 }}</p>
+                        <p class="text-red-500 text-sm mt-1">{{ form.notes.errors.0 }}</p>
                         {% endif %}
                     </div>
                 </div>
 
                 <!-- Buttons -->
                 <div class="flex gap-4 mt-8">
-                    <button type="submit" class="flex-1 px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-medium transition-colors shadow-md">
+                    <button type="submit"
+                        class="flex-1 px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-medium transition-colors shadow-md">
                         {{ action }} Cycle
                     </button>
-                    <a href="{% url 'home' %}" class="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors text-center">
+                    <a href="{% url 'home' %}"
+                        class="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors text-center">
                         Cancel
                     </a>
                 </div>
