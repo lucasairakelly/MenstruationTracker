@@ -29,7 +29,15 @@
                     </div>
 
                     <!-- End Date -->
-
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            End Date <span class="text-gray-400 text-sm">(Optional - log when your period ends)</span>
+                        </label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.end_date.errors.0 }}</p>
+                        {% endif %}
+                    </div>
 
                     <!-- Notes -->
                     <div>
